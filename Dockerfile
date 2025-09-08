@@ -8,7 +8,7 @@ WORKDIR /app
 COPY mvnw pom.xml ./
 
 # Copy the .mvn folder
-COPY hotel_backend/.mvn .mvn
+COPY .mvn .mvn
 
 # Make mvnw executable
 RUN chmod +x mvnw
