@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.JoinColumn;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,9 +36,13 @@ public class User {
 	
 	@ManyToMany(fetch = FetchType.EAGER, 
 		cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
-	@JoinTable(name = "user_roles", 
+	//@JoinTable(name = "user_roles", 
+	//	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+	//	inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	@JoinTable(name = "user_roles",
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+		uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"}))
 	private Collection<Role> roles = new HashSet<>();
 	
 }
